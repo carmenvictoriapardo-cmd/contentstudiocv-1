@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carmen Victoria Content Studio</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f4f0;color:#1a1a1a;padding:1.5rem;}
+:root{--bg:#ffffff;--bg2:#f5f4f0;--bg3:#efefeb;--border:rgba(0,0,0,0.12);--border2:rgba(0,0,0,0.22);--text:#1a1a1a;--text2:#555;--text3:#999;--radius:8px;--radius-lg:12px;}
+select,textarea,input{width:100%;font-size:14px;font-family:inherit;color:var(--text);background:var(--bg);border:0.5px solid var(--border2);border-radius:var(--radius);padding:8px 12px;outline:none;}
+select:focus,textarea:focus{border-color:#534AB7;}
+textarea{resize:vertical;line-height:1.6;}
+.wrap{max-width:780px;margin:0 auto;}
+.header{margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:0.5px solid var(--border);}
+.header h1{font-size:18px;font-weight:500;color:var(--text);margin-bottom:4px;}
+.header p{font-size:13px;color:var(--text2);}
+.row{margin-bottom:14px;}
+label{font-size:13px;color:var(--text2);display:block;margin-bottom:6px;}
+.plat-btn{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);padding:9px 8px;cursor:pointer;text-align:center;font-size:13px;color:var(--text2);}
+.plat-btn.sel{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;font-weight:500;}
+.chip{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);padding:6px 12px;cursor:pointer;font-size:12px;color:var(--text2);display:inline-block;margin:3px;}
+.chip.sel{background:#E1F5EE;color:#085041;border-color:#5DCAA5;font-weight:500;}
+.purple-btn{width:100%;padding:12px;border-radius:var(--radius);border:none;background:#534AB7;color:#EEEDFE;font-size:15px;font-weight:500;cursor:pointer;margin-top:4px;}
+.purple-btn:hover{background:#3C3489;}
+.purple-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.outline-btn{background:transparent;border:0.5px solid var(--border2);border-radius:var(--radius);padding:6px 14px;font-size:12px;cursor:pointer;color:var(--text2);}
+.outline-btn:hover{background:var(--bg2);}
+.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:12px;}
+.tag-purple{font-size:11px;font-weight:500;color:#3C3489;background:#EEEDFE;display:inline-block;padding:3px 10px;border-radius:var(--radius);}
+.tag-teal{font-size:11px;font-weight:500;color:#085041;background:#E1F5EE;display:inline-block;padding:3px 10px;border-radius:var(--radius);}
+.tag-coral{font-size:11px;font-weight:500;color:#712B13;background:#FAECE7;display:inline-block;padding:3px 10px;border-radius:var(--radius);}
+.tag-amber{font-size:11px;font-weight:500;color:#633806;background:#FAEEDA;display:inline-block;padding:3px 10px;border-radius:var(--radius);}
+.tag-blue{font-size:11px;font-weight:500;color:#0C447C;background:#E6F1FB;display:inline-block;padding:3px 10px;border-radius:var(--radius);}
+.copy-text{font-size:14px;line-height:1.7;color:var(--text);white-space:pre-wrap;}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid #EEEDFE;border-top-color:#534AB7;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.divider{border:none;border-top:0.5px solid var(--border);margin:1.5rem 0;}
+.hint{font-size:12px;color:var(--text3);margin-top:4px;}
+.stitle{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;}
+.nav{display:flex;gap:6px;flex-wrap:wrap;border-bottom:0.5px solid var(--border);padding-bottom:12px;margin-bottom:1.5rem;}
+.nav-btn{background:transparent;border:0.5px solid var(--border2);border-radius:var(--radius);padding:7px 14px;font-size:13px;cursor:pointer;color:var(--text2);}
+.nav-btn:hover{background:var(--bg2);}
+.nav-btn.active{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;font-weight:500;}
+.tab{display:none;}.tab.active{display:block;}
+.badge{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#534AB7;color:#EEEDFE;font-size:10px;font-weight:500;margin-left:5px;}
+.score-bar-wrap{background:var(--bg2);border-radius:20px;height:10px;overflow:hidden;margin:6px 0;}
+.score-bar{height:10px;border-radius:20px;transition:width 0.6s;}
+.scene-card{background:var(--bg2);border-radius:var(--radius);padding:10px 14px;margin-bottom:8px;border-left:3px solid #534AB7;}
+.scene-sec{font-size:11px;font-weight:500;color:#3C3489;margin-bottom:4px;}
+.scene-text{font-size:13px;line-height:1.6;color:var(--text);}
+.hashtag-pill{display:inline-block;font-size:12px;background:#EEEDFE;color:#3C3489;padding:4px 12px;border-radius:20px;margin:3px;cursor:pointer;}
+.hashtag-pill:hover{background:#CECBF6;}
+.hist-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px;margin-bottom:10px;}
+.hist-preview{font-size:13px;color:var(--text2);line-height:1.5;white-space:pre-wrap;max-height:70px;overflow:hidden;}
+.hist-preview.exp{max-height:none;}
+.del-btn{color:#A32D2D;border-color:#F09595;}
+.del-btn:hover{background:#FCEBEB;}
+.empty-state{text-align:center;padding:2rem;color:var(--text3);font-size:13px;}
+.score-num{font-size:28px;font-weight:500;}
+.feedback-item{font-size:13px;line-height:1.6;padding:8px 12px;border-radius:var(--radius);margin-bottom:6px;}
+.fb-ok{background:#E1F5EE;color:#085041;}
+.fb-warn{background:#FAEEDA;color:#633806;}
+.fb-fix{background:#FAECE7;color:#712B13;}
+.mov-badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:var(--radius);margin:2px;background:#EEEDFE;color:#3C3489;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <h1>Carmen Victoria Content Studio</h1>
+  <p>@soycarmenvictoriapardo · Sistema completo de contenido para equipos · Miami, Doral FL</p>
+</div>
+
+<div class="nav" id="main-nav">
+  <button class="nav-btn active" onclick="goTab('copy',this)">Generar copy</button>
+  <button class="nav-btn" onclick="goTab('guion',this)">Guion de video</button>
+  <button class="nav-btn" onclick="goTab('idea',this)">Idea en bruto</button>
+  <button class="nav-btn" onclick="goTab('voz',this)">Verificar voz</button>
+  <button class="nav-btn" onclick="goTab('hashtags',this)">Hashtags</button>
+  <button class="nav-btn" onclick="goTab('historial',this)">Historial <span class="badge" id="hist-badge">0</span></button>
+</div>
+
+<!-- TAB: COPY -->
+<div id="tab-copy" class="tab active">
+  <div class="row">
+    <div class="stitle">Plataforma</div>
+    <div class="grid2" id="plat-grid">
+      <div class="plat-btn sel" data-p="instagram" onclick="selPlat(this)">Instagram</div>
+      <div class="plat-btn" data-p="facebook" onclick="selPlat(this)">Facebook</div>
+      <div class="plat-btn" data-p="tiktok" onclick="selPlat(this)">TikTok</div>
+      <div class="plat-btn" data-p="linkedin" onclick="selPlat(this)">LinkedIn</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="stitle">Tipo</div>
+    <div id="tipo-grid">
+      <button class="chip sel" data-t="post feed" onclick="selChip(this,'tipo-grid')">Post feed</button>
+      <button class="chip" data-t="carrusel" onclick="selChip(this,'tipo-grid')">Carrusel</button>
+      <button class="chip" data-t="story" onclick="selChip(this,'tipo-grid')">Story</button>
+      <button class="chip" data-t="reel caption" onclick="selChip(this,'tipo-grid')">Reel caption</button>
+      <button class="chip" data-t="bio" onclick="selChip(this,'tipo-grid')">Bio</button>
+      <button class="chip" data-t="cta venta" onclick="selChip(this,'tipo-grid')">CTA venta</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="stitle">Fórmula</div>
+    <div id="formula-grid">
+      <button class="chip sel" data-f="confesional" onclick="selChip(this,'formula-grid')">Hook confesional</button>
+      <button class="chip" data-f="transformacion" onclick="selChip(this,'formula-grid')">2 frases transformación</button>
+      <button class="chip" data-f="pas" onclick="selChip(this,'formula-grid')">PAS espiritual</button>
+      <button class="chip" data-f="4p" onclick="selChip(this,'formula-grid')">4P alto ticket</button>
+      <button class="chip" data-f="aida" onclick="selChip(this,'formula-grid')">AIDA</button>
+      <button class="chip" data-f="hormozi" onclick="selChip(this,'formula-grid')">Hormozi</button>
+      <button class="chip" data-f="brene" onclick="selChip(this,'formula-grid')">Brené Brown</button>
+      <button class="chip" data-f="shetty" onclick="selChip(this,'formula-grid')">Jay Shetty</button>
+      <button class="chip" data-f="auto" onclick="selChip(this,'formula-grid')">IA elige la mejor</button>
+    </div>
+  </div>
+  <div class="row">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div><label>Objetivo</label>
+        <select id="obj-copy">
+          <option value="engagement">Engagement</option>
+          <option value="leads">Captar leads</option>
+          <option value="awareness">Awareness de marca</option>
+          <option value="ventas">Venta directa</option>
+          <option value="comunidad">Construir comunidad</option>
+          <option value="seo">SEO local Doral</option>
+        </select>
+      </div>
+      <div><label>Tono</label>
+        <select id="tono-copy">
+          <option value="inspiracional cercano">Inspiracional y cercano</option>
+          <option value="directo poderoso">Directo y poderoso</option>
+          <option value="vulnerable auténtico">Vulnerable y auténtico</option>
+          <option value="profesional autoridad">Profesional con autoridad</option>
+          <option value="fe propósito">Fe y propósito</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <label>Contexto o idea</label>
+    <textarea id="ctx-copy" rows="4" placeholder="Escribe tu idea, historia o tema. Ej: 'La nevera vacía y las tres propuestas' o 'Lanzamiento programa 90 días Doral'"></textarea>
+    <p class="hint">Cualquier persona del equipo puede escribir aquí. El sistema mantiene la voz de Carmen Victoria.</p>
+  </div>
+  <button class="purple-btn" id="btn-copy" onclick="genCopy()">Generar copy</button>
+  <div id="out-copy"></div>
+</div>
+
+<!-- TAB: GUION -->
+<div id="tab-guion" class="tab">
+  <div class="row">
+    <div class="stitle">Plataforma del video</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+      <div class="plat-btn sel" data-p="instagram reel" onclick="selGuionPlat(this)" id="gp1">Instagram Reel</div>
+      <div class="plat-btn" data-p="tiktok" onclick="selGuionPlat(this)" id="gp2">TikTok</div>
+      <div class="plat-btn" data-p="youtube shorts" onclick="selGuionPlat(this)" id="gp3">YouTube Shorts</div>
+    </div>
+  </div>
+  <div class="row">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div><label>Duración</label>
+        <select id="dur-guion">
+          <option value="15-30 segundos">15-30 segundos</option>
+          <option value="30-60 segundos" selected>30-60 segundos</option>
+          <option value="60-90 segundos">60-90 segundos</option>
+          <option value="3-5 minutos">3-5 minutos (YouTube)</option>
+        </select>
+      </div>
+      <div><label>Objetivo</label>
+        <select id="obj-guion">
+          <option value="viralidad y engagement">Viralidad y engagement</option>
+          <option value="autoridad y confianza">Autoridad y confianza</option>
+          <option value="captar leads">Captar leads</option>
+          <option value="venta de servicio">Venta de servicio</option>
+          <option value="educar a la audiencia">Educar a la audiencia</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <label>Idea o tema del video</label>
+    <textarea id="ctx-guion" rows="4" placeholder="Ej: 'Cómo pasé de la nevera vacía a firmar mi casa' o '3 errores de emprendedores latinos en Miami'"></textarea>
+  </div>
+  <button class="purple-btn" id="btn-guion" onclick="genGuion()">Generar guion</button>
+  <div id="out-guion"></div>
+</div>
+
+<!-- TAB: IDEA EN BRUTO -->
+<div id="tab-idea" class="tab">
+  <div class="card" style="border-left:3px solid #534AB7;border-radius:0 var(--radius-lg) var(--radius-lg) 0;">
+    <p style="font-size:13px;color:var(--text2);">Escribe cualquier idea, pensamiento o borrador. El sistema lo analiza, lo convierte en contexto listo para generar y te dice qué plataformas y fórmulas le van mejor.</p>
+  </div>
+  <div class="row">
+    <label>Tu idea (como sea, en bruto)</label>
+    <textarea id="ctx-idea" rows="6" placeholder="Puede ser una nota de voz transcrita, un pensamiento, algo que pasó hoy... Ej: 'Hoy una clienta me dijo que por primera vez en 5 años tiene claridad de hacia dónde va su negocio'"></textarea>
+  </div>
+  <button class="purple-btn" id="btn-idea" onclick="genIdea()">Analizar y desarrollar idea</button>
+  <div id="out-idea"></div>
+</div>
+
+<!-- TAB: VERIFICAR VOZ -->
+<div id="tab-voz" class="tab">
+  <div class="card" style="border-left:3px solid #D85A30;border-radius:0 var(--radius-lg) var(--radius-lg) 0;">
+    <p style="font-size:13px;color:var(--text2);">Pega cualquier copy escrito por tu equipo. El sistema evalúa si suena a Carmen Victoria, detecta qué está fuera de voz y entrega la versión corregida.</p>
+  </div>
+  <div class="row">
+    <label>Copy a verificar</label>
+    <textarea id="ctx-voz" rows="6" placeholder="Pega aquí el copy que quieres verificar..."></textarea>
+  </div>
+  <button class="purple-btn" id="btn-voz" onclick="genVoz()">Verificar voz de marca</button>
+  <div id="out-voz"></div>
+</div>
+
+<!-- TAB: HASHTAGS -->
+<div id="tab-hashtags" class="tab">
+  <div class="row">
+    <div class="stitle">Plataforma</div>
+    <div class="grid2" id="hplat-grid">
+      <div class="plat-btn sel" data-p="instagram" onclick="selHPlat(this)">Instagram</div>
+      <div class="plat-btn" data-p="facebook" onclick="selHPlat(this)">Facebook</div>
+      <div class="plat-btn" data-p="tiktok" onclick="selHPlat(this)">TikTok</div>
+      <div class="plat-btn" data-p="linkedin" onclick="selHPlat(this)">LinkedIn</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="stitle">Categoría</div>
+    <div id="hcat-grid">
+      <button class="chip sel" data-c="coaching personal" onclick="selChip(this,'hcat-grid')">Coaching personal</button>
+      <button class="chip" data-c="coaching empresarial" onclick="selChip(this,'hcat-grid')">Coaching empresarial</button>
+      <button class="chip" data-c="fe y propósito" onclick="selChip(this,'hcat-grid')">Fe y propósito</button>
+      <button class="chip" data-c="liderazgo femenino" onclick="selChip(this,'hcat-grid')">Liderazgo femenino</button>
+      <button class="chip" data-c="emprendimiento latino Miami" onclick="selChip(this,'hcat-grid')">Emprendimiento latino Miami</button>
+      <button class="chip" data-c="marca personal" onclick="selChip(this,'hcat-grid')">Marca personal</button>
+      <button class="chip" data-c="SEO local Doral" onclick="selChip(this,'hcat-grid')">SEO local Doral</button>
+    </div>
+  </div>
+  <button class="purple-btn" id="btn-hash" onclick="genHashtags()">Generar banco de hashtags</button>
+  <div id="out-hash"></div>
+</div>
+
+<!-- TAB: HISTORIAL -->
+<div id="tab-historial" class="tab">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+    <span style="font-size:13px;color:var(--text2);">Copys guardados esta sesión</span>
+    <button class="outline-btn del-btn" onclick="clearAll()">Borrar todo</button>
+  </div>
+  <div id="hist-list"></div>
+</div>
+
+</div>
+
+<script>
+const BRAND=`IDENTIDAD COMPLETA — CARMEN VICTORIA PARDO (@soycarmenvictoriapardo)
+Comunicadora, publicista, productora televisiva, escritora y mentora. Venezolana. Miami, Doral FL. 30+ años. 2 Emmy Suncoast. UCAB Venezuela. RCTV (Gerente Variedades), HBO Lat, Globovisión, Televen, Univisión, Telemundo, Discovery (Visa, J&J, McDonald's, Samsung, Walmart, Toyota). Co-autora "Jugando a ser Dios" (Grupo J3V). Serie "De Milagro en Milagro".
+HISTORIAS REALES: (1) Nevera vacía → 3 propuestas → casa firmada 2 años después. (2) Baño antes de salir al aire por primera vez. (3) De facturación sólida a cero por resistirse a lo digital. (4) Oración del embarazo "ahora te toca alimentar a dos" → 3 llamadas en 24h. (5) Mujer de las latas: "No mires nunca abajo. Mira hacia arriba... que ahí está Dios." (6) Linaje consciente: abuela=disfrute y ahorro, madre=amor, padre=visión grande.
+5 MOVIMIENTOS: 1-Conciencia 2-Ruptura 3-Estructura 4-Ejecución con enfoque 5-Diferenciación.
+FRASE CENTRAL: "El éxito sin sistema es emoción. El éxito con sistema es expansión."
+AUDIENCIA: Latinas emprendedoras 35-55, ejecutivos latinos en USA, bilingüe, Doral/Miami-Dade.
+VOZ: directa, con fe, sin victimismo, con sistema, con historia real. NUNCA: "Hoy quiero compartir", "Es importante", "En el mundo de hoy", motivación vacía, frases genéricas.`;
+
+const FMAP={confesional:"Hook Confesional: empieza en el MEDIO del conflicto, máx 80 chars primera línea, detalles sensoriales, vulnerabilidad real.",transformacion:"2 Frases Transformación: ANTES en 1 frase → DESPUÉS en 1 frase → qué cambió en el medio → lección → CTA.",pas:"PAS Espiritual: Problema (concreto) → Amplificación (consecuencia emocional) → Solución con alma y fe.",4p:"4P Alto Ticket: Promise (resultado audaz) → Picture (futuro vívido) → Proof (Emmy, 30 años, historias) → Push (urgencia real).",aida:"AIDA 2026: Atención → Interés → Deseo (estado deseado concreto) → Acción.",hormozi:"Hormozi: VALOR GRATUITO masivo primero → oferta solo si quieren ir más rápido. Directo, sin motivación vacía.",brene:"Brené Brown: confesión de imperfección real → insight que la valida → verdad universal → llamado a la valentía.",shetty:"Jay Shetty: verdad contraintuitiva → historia o metáfora → principio aplicable → CTA de reflexión.",auto:"IA elige la mejor fórmula según el contexto. Explica en 1 línea qué elegiste y por qué."};
+const PRMAP={instagram:"IG 2026: primera línea <80 chars, indexa en Google (keywords naturales), párrafos cortos, 5-8 hashtags al final, CTA, 1-2 emojis por bloque.",facebook:"FB: audiencia 35-65, más texto ok, compartir es la métrica, historia completa funciona, CTA conversacional.",tiktok:"TikTok: GUION ORAL, primeros 3 seg todo, frases cortas, directo a cámara, caption <150 chars + 2-3 hashtags.",linkedin:"LinkedIn: insight profesional en primera línea, párrafos 1-2 líneas, credenciales sí (Emmy, 30 años), hashtags profesionales."};
+
+let selPlatVal='instagram',selGuionPlatVal='instagram reel',selHPlatVal='instagram';
+let sessionHistory=[],currentResults=[];
+
+function goTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(id==='historial')renderHist();
+}
+function selPlat(el){document.querySelectorAll('#plat-grid .plat-btn').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');selPlatVal=el.dataset.p;}
+function selChip(el,grid){document.querySelectorAll('#'+grid+' .chip').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');}
+function selGuionPlat(el){document.querySelectorAll('#gp1,#gp2,#gp3').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');selGuionPlatVal=el.dataset.p;}
+function selHPlat(el){document.querySelectorAll('#hplat-grid .plat-btn').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');selHPlatVal=el.dataset.p;}
+function getSelChip(grid){const s=document.querySelector('#'+grid+' .chip.sel');return s?s.dataset.t||s.dataset.f||s.dataset.c:'';}
+
+async function callAPI(system,userMsg,maxTok=1200){
+  const r=await fetch('/.netlify/functions/claude',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTok,system,messages:[{role:'user',content:userMsg}]})
+  });
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.message||'Error de API');
+  return d.content.map(i=>i.text||'').join('');
+}
+
+function setBtn(id,loading,label){
+  const b=document.getElementById(id);
+  if(loading){b.disabled=true;b.innerHTML='<span class="spinner"></span> Generando...';}
+  else{b.disabled=false;b.innerHTML=label||'Generar';}
+}
+
+function saveCopy(idx){
+  const c=currentResults[idx];
+  if(!c||c.saved)return;
+  sessionHistory.unshift({id:Date.now()+idx,label:c.label,copy:c.copy,plat:selPlatVal,formula:getSelChip('formula-grid')||'auto',tipo:getSelChip('tipo-grid')||'post',ctx:document.getElementById('ctx-copy').value.slice(0,80),fecha:new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'}),expanded:false});
+  c.saved=true;
+  document.getElementById('hist-badge').textContent=sessionHistory.length;
+  const b=document.getElementById('sbtn-'+idx);
+  if(b){b.textContent='Guardado';b.disabled=true;}
+}
+function saveAll(){currentResults.forEach((_,i)=>saveCopy(i));}
+
+function copyText(elId){
+  const el=document.getElementById(elId);
+  if(!el)return;
+  navigator.clipboard.writeText(el.innerText).then(()=>{
+    const b=document.getElementById('cbtn-'+elId);
+    if(b){const o=b.textContent;b.textContent='Copiado!';setTimeout(()=>{b.textContent=o;},1500);}
+  });
+}
+
+async function genCopy(){
+  const ctx=document.getElementById('ctx-copy').value.trim();
+  if(!ctx){document.getElementById('out-copy').innerHTML='<p style="color:#A32D2D;font-size:13px;margin-top:10px;">Escribe tu contexto primero.</p>';return;}
+  const plat=selPlatVal,tipo=getSelChip('tipo-grid')||'post feed',formula=getSelChip('formula-grid')||'confesional';
+  const obj=document.getElementById('obj-copy').value,tono=document.getElementById('tono-copy').value;
+  setBtn('btn-copy',true);document.getElementById('out-copy').innerHTML='';currentResults=[];
+  const sys=`Eres el generador de copywriting de CARMEN VICTORIA PARDO.\n${BRAND}\nFÓRMULA: ${FMAP[formula]||FMAP.auto}\nPLATAFORMA: ${PRMAP[plat]||PRMAP.instagram}\nOBJETIVO: ${obj}\nTONO: ${tono}\nTIPO: ${tipo}\nGenera EXACTAMENTE 3 versiones distintas en la VOZ EXACTA de Carmen Victoria. NUNCA uses frases genéricas de IA. Devuelve SOLO JSON sin markdown:\n{"copies":[{"label":"Versión 1 — [nombre hook]","movimiento":"[1 de los 5 movimientos]","copy":"texto"},{"label":"Versión 2 — [nombre hook]","movimiento":"[movimiento]","copy":"texto"},{"label":"Versión 3 — [nombre hook]","movimiento":"[movimiento]","copy":"texto"}]}`;
+  try{
+    const raw=await callAPI(sys,`Contexto: ${ctx}`);
+    const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    currentResults=parsed.copies.map(c=>({...c,saved:false}));
+    let html='<hr class="divider"><div style="display:flex;justify-content:flex-end;margin-bottom:10px;"><button class="outline-btn" onclick="saveAll()">Guardar todos</button></div>';
+    currentResults.forEach((c,i)=>{
+      const eid='ctext-'+i;
+      html+=`<div class="card"><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;align-items:center"><span class="tag-purple">${c.label}</span><span class="mov-badge">${c.movimiento}</span></div><div class="copy-text" id="${eid}">${c.copy}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;"><button class="outline-btn" id="cbtn-${eid}" onclick="copyText('${eid}')">Copiar</button><button class="outline-btn" id="sbtn-${i}" onclick="saveCopy(${i})">Guardar</button></div></div>`;
+    });
+    document.getElementById('out-copy').innerHTML=html;
+  }catch(e){document.getElementById('out-copy').innerHTML='<p style="color:#A32D2D;font-size:13px;margin-top:10px;">Error al generar. Intenta de nuevo.</p>';}
+  setBtn('btn-copy',false,'Generar copy');
+}
+
+async function genGuion(){
+  const ctx=document.getElementById('ctx-guion').value.trim();
+  if(!ctx){document.getElementById('out-guion').innerHTML='<p style="color:#A32D2D;font-size:13px;margin-top:10px;">Escribe tu idea primero.</p>';return;}
+  const plat=selGuionPlatVal,dur=document.getElementById('dur-guion').value,obj=document.getElementById('obj-guion').value;
+  setBtn('btn-guion',true);document.getElementById('out-guion').innerHTML='';
+  const sys=`Eres el director de contenido de CARMEN VICTORIA PARDO.\n${BRAND}\nCrea un guion de video COMPLETO para ${plat}, duración ${dur}, objetivo: ${obj}. Estructura por ESCENAS con tiempo exacto, texto oral exacto en voz de Carmen Victoria, nota de dirección. Devuelve SOLO JSON sin markdown:\n{"titulo":"título","hook_segundos":3,"duracion_total":"${dur}","escenas":[{"seg":"0-3s","oral":"texto exacto","direccion":"indicación"}],"caption":"texto del caption","hashtags":["#tag1"],"cta":"CTA final","movimiento":"movimiento que activa","formula":"fórmula usada"}`;
+  try{
+    const raw=await callAPI(sys,`Idea: ${ctx}`,1400);
+    const g=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    let html='<hr class="divider"><div class="card">';
+    html+=`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;"><span class="tag-purple">${g.titulo}</span><span class="tag-teal">Movimiento: ${g.movimiento}</span><span class="tag-amber">Fórmula: ${g.formula}</span></div>`;
+    html+=`<div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Duración: ${g.duracion_total} · Hook: primeros ${g.hook_segundos}s</div>`;
+    html+=`<div style="font-size:13px;font-weight:500;margin-bottom:8px;">Escenas</div>`;
+    g.escenas.forEach(e=>{html+=`<div class="scene-card"><div class="scene-sec">${e.seg}</div><div class="scene-text" style="font-weight:500;margin-bottom:4px;">"${e.oral}"</div><div class="scene-text" style="color:var(--text2);font-size:12px;">Dirección: ${e.direccion}</div></div>`;});
+    const capId='guion-cap';
+    html+=`<div style="margin-top:14px;"><div style="font-size:13px;font-weight:500;margin-bottom:6px;">Caption</div><div class="copy-text" id="${capId}" style="background:var(--bg2);padding:12px;border-radius:var(--radius);">${g.caption}\n\n${g.hashtags.join(' ')}</div><div style="display:flex;gap:8px;margin-top:8px;"><button class="outline-btn" id="cbtn-${capId}" onclick="copyText('${capId}')">Copiar caption</button></div></div></div>`;
+    document.getElementById('out-guion').innerHTML=html;
+  }catch(e){document.getElementById('out-guion').innerHTML='<p style="color:#A32D2D;font-size:13px;margin-top:10px;">Error. Intenta de nuevo.</p>';}
+  setBtn('btn-guion',false,'Generar guion');
+}
+
+async function genIdea(){
+  const ctx=document.getElementById('ctx-idea').value.trim();
+  if(!ctx){document.getElementById('out-idea').innerHTML='<p style="color:#A32D2D;font-size:13px;margin-top:10px;">Escribe tu idea primero.</p>';return;}
+  setBtn('btn-idea',true);document.getElementById('out-idea').innerHTML='';
+  const sys=`Eres el estratega de contenido de CARMEN VICTORIA PARDO.\n${BRAND}\nAnaliza la idea en bruto y devuelve SOLO JSON sin markdown:\n{"movimiento":"nombre","razon_movimiento":"por qué encaja","plataformas":[{"plat":"nombre","razon":"por qué"}],"formulas":[{"formula":"nombre","razon":"por qué"}],"contexto_listo":"el contexto pulido y desarrollado para el generador","hooks":["hook1","hook2"]}`;
+  try{
+    const raw=await callAPI(sys,`Idea: ${ctx}`,800);
+    const r=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    let html='<hr class="divider"><div class="card">';
+    html+=`<div style="margin-bottom:12px;"><span class="tag-purple">Movimiento ${r.movimiento}</span><span style="font-size:13px;color:var(--text2);margin-left:8px;">${r.razon_movimiento}</span></div>`;
+    html+=`<div style="margin-bottom:12px;"><div style="font-size:13px;font-weight:500;margin-bottom:6px;">Mejores plataformas</div>${r.plataformas.map(p=>`<div style="font-size:13px;margin-bottom:4px;"><span class="tag-blue">${p.plat}</span> <span style="color:var(--text2);">${p.razon}</span></div>`).join('')}</div>`;
+    html+=`<div style="margin-bottom:12px;"><div style="font-size:13px;font-weight:500;margin-bottom:6px;">Fórmulas recomendadas</div>${r.formulas.map(f=>`<div style="font-size:13px;margin-bottom:4px;"><span class="tag-teal">${f.formula}</span> <span style="color:var(--text2);">${f.razon}</span></div>`).join('')}</div>`;
+    html+=`<div style="margin-bottom:12px;"><div style="font-size:13px;font-weight:500;margin-bottom:6px;">Hooks sugeridos</div>${r.hooks.map(h=>`<div style="font-size:13px;background:var(--bg2);padding:8px 12px;border-radius:var(--radius);margin-bottom:6px;font-style:italic;">"${h}"</div>`).join('')}</div>`;
+    const ctxId='idea-ctx';
+    html+=`<div><div style="font-size:13px;font-weight:500;margin-bottom:6px;">Contexto listo para el generador</div><div class="copy-text" id="${ctxId}" style="background:var(--bg2);padding:12px;border-radius:var(--radius);">${r.contexto_listo}</div><div style="display:flex;gap:8px;margin-top:8px;"><button class="outline-btn" id="cbtn-${ctxId}" onclick="copyText('${ctxId}')">Copiar</button></div></div></div>`;
+    document.getElementById('out-idea').innerHTML=html;
+  }catch(e){document.getElementById('out-idea').innerHTML='<p style="color:#A32D2D;font-size:13px;margin-top:10px;">Error. Intenta de nuevo.</p>';}
+  setBtn('btn-idea',false,'Analizar y desarrollar idea');
+}
+
+async function genVoz(){
+  const ctx=document.getElementById('ctx-voz').value.trim();
+  if(!ctx){document.getElementById('out-voz').innerHTML='<p style="color:#A32D2D;font-size:13px;margin-top:10px;">Pega el copy a verificar.</p>';return;}
+  setBtn('btn-voz',true);document.getElementById('out-voz').innerHTML='';
+  const sys=`Eres el guardián de la voz de marca de CARMEN VICTORIA PARDO.\n${BRAND}\nAnaliza el copy y devuelve SOLO JSON sin markdown:\n{"score":85,"nivel":"Alto / Medio / Bajo","aspectos_ok":["lo que sí está en voz"],"aspectos_fuera_de_voz":["lo que no encaja"],"frases_problematicas":[{"original":"frase","problema":"por qué","correccion":"cómo sonaría en voz de CV"}],"version_corregida":"el copy completo reescrito en voz perfecta de Carmen Victoria"}`;
+  try{
+    const raw=await callAPI(sys,`Copy a verificar:\n${ctx}`,900);
+    const r=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    const sc=r.score,scoreColor=sc>=80?'#1D9E75':sc>=60?'#BA7517':'#A32D2D',barColor=sc>=80?'#5DCAA5':sc>=60?'#EF9F27':'#E24B4A',nivelCls=sc>=80?'tag-teal':sc>=60?'tag-amber':'tag-coral';
+    let html='<hr class="divider"><div class="card">';
+    html+=`<div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;"><div style="text-align:center;"><div class="score-num" style="color:${scoreColor};">${sc}</div><div style="font-size:12px;color:var(--text2);">/ 100</div></div><div style="flex:1;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;font-weight:500;">Fidelidad de voz</span><span class="${nivelCls}" style="font-size:11px;padding:2px 8px;border-radius:20px;">${r.nivel}</span></div><div class="score-bar-wrap"><div class="score-bar" style="width:${sc}%;background:${barColor};"></div></div></div></div>`;
+    if(r.aspectos_ok?.length){html+=`<div style="margin-bottom:12px;"><div style="font-size:13px;font-weight:500;margin-bottom:6px;">Lo que suena bien</div>${r.aspectos_ok.map(a=>`<div class="feedback-item fb-ok">${a}</div>`).join('')}</div>`;}
+    if(r.aspectos_fuera_de_voz?.length){html+=`<div style="margin-bottom:12px;"><div style="font-size:13px;font-weight:500;margin-bottom:6px;">Fuera de voz</div>${r.aspectos_fuera_de_voz.map(a=>`<div class="feedback-item fb-warn">${a}</div>`).join('')}</div>`;}
+    if(r.frases_problematicas?.length){html+=`<div style="margin-bottom:12px;"><div style="font-size:13px;font-weight:500;margin-bottom:8px;">Correcciones específicas</div>${r.frases_problematicas.map(f=>`<div style="margin-bottom:8px;"><div class="feedback-item fb-fix"><strong>Original:</strong> "${f.original}"<br><span style="font-size:12px;">${f.problema}</span></div><div class="feedback-item fb-ok" style="margin-top:4px;"><strong>Corrección:</strong> "${f.correccion}"</div></div>`).join('')}</div>`;}
+    const cvId='voz-corrected';
+    html+=`<div><div style="font-size:13px;font-weight:500;margin-bottom:6px;">Versión corregida</div><div class="copy-text" id="${cvId}" style="background:var(--bg2);padding:12px;border-radius:var(--radius);">${r.version_corregida}</div><div style="display:flex;gap:8px;margin-top:8px;"><button class="outline-btn" id="cbtn-${cvId}" onclick="copyText('${cvId}')">Copiar versión corregida</button></div></div></div>`;
+    document.getElementById('out-voz').innerHTML=html;
+  }catch(e){document.getElementById('out-voz').innerHTML='<p style="color:#A32D2D;font-size:13px;margin-top:10px;">Error. Intenta de nuevo.</p>';}
+  setBtn('btn-voz',false,'Verificar voz de marca');
+}
+
+async function genHashtags(){
+  const plat=selHPlatVal,cat=getSelChip('hcat-grid')||'coaching personal';
+  setBtn('btn-hash',true);document.getElementById('out-hash').innerHTML='';
+  const sys=`Eres el experto SEO de CARMEN VICTORIA PARDO, activa en Miami Doral FL.\n${BRAND}\nGenera banco de hashtags para ${plat}, categoría: ${cat}. Devuelve SOLO JSON sin markdown:\n{"nicho":["#tag1"],"local_seo":["#tag1"],"comunidad":["#tag1"],"marca":["#carmenvictoriapardo"],"virales_2026":["#tag1"],"combo_recomendado":["7-8 mejores combinados"]}`;
+  try{
+    const raw=await callAPI(sys,`Plataforma: ${plat}, Categoría: ${cat}`,600);
+    const r=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    const allId='all-hash';
+    let html='<hr class="divider"><div class="card">';
+    [['Nicho','nicho','tag-purple'],['SEO local Miami-Doral','local_seo','tag-blue'],['Comunidad latina','comunidad','tag-teal'],['Marca personal','marca','tag-coral'],['Virales 2026','virales_2026','tag-amber']].forEach(([label,key,cls])=>{
+      if(r[key]?.length){html+=`<div style="margin-bottom:12px;"><div style="font-size:12px;font-weight:500;color:var(--text2);margin-bottom:6px;">${label}</div>${r[key].map(h=>`<span class="hashtag-pill" onclick="copyHash('${h}')">${h}</span>`).join('')}</div>`;}
+    });
+    html+=`<div style="margin-top:14px;"><div style="font-size:13px;font-weight:500;margin-bottom:6px;">Combo recomendado</div><div class="copy-text" id="${allId}" style="background:var(--bg2);padding:12px;border-radius:var(--radius);">${r.combo_recomendado?.join(' ')}</div><div style="margin-top:8px;"><button class="outline-btn" id="cbtn-${allId}" onclick="copyText('${allId}')">Copiar combo</button></div></div></div>`;
+    document.getElementById('out-hash').innerHTML=html;
+  }catch(e){document.getElementById('out-hash').innerHTML='<p style="color:#A32D2D;font-size:13px;margin-top:10px;">Error. Intenta de nuevo.</p>';}
+  setBtn('btn-hash',false,'Generar banco de hashtags');
+}
+
+function copyHash(h){navigator.clipboard.writeText(h);}
+
+function renderHist(){
+  const el=document.getElementById('hist-list');
+  if(!sessionHistory.length){el.innerHTML='<div class="empty-state">Aún no has guardado copys.<br>Genera y presiona "Guardar" en cualquier resultado.</div>';return;}
+  el.innerHTML=sessionHistory.map((h,i)=>`<div class="hist-card"><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:6px;"><span class="tag-blue" style="font-size:11px;padding:2px 8px;">${h.plat}</span><span class="tag-purple" style="font-size:11px;padding:2px 8px;">${h.formula}</span><span style="font-size:11px;color:var(--text3);">${h.fecha}</span></div><div style="font-size:11px;color:var(--text3);margin-bottom:4px;font-style:italic;">"${h.ctx}${h.ctx.length>=80?'...':''}"</div><div style="font-size:12px;font-weight:500;color:var(--text2);margin-bottom:4px;">${h.label}</div><div class="hist-preview ${h.expanded?'exp':''}">${h.copy}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;"><button class="outline-btn" onclick="copyHistIdx(${i})">Copiar</button><button class="outline-btn" onclick="toggleH(${i})">${h.expanded?'Ver menos':'Ver completo'}</button><button class="outline-btn del-btn" onclick="delHist(${i})">Eliminar</button></div></div>`).join('');
+}
+function copyHistIdx(i){navigator.clipboard.writeText(sessionHistory[i].copy);}
+function toggleH(i){sessionHistory[i].expanded=!sessionHistory[i].expanded;renderHist();}
+function delHist(i){sessionHistory.splice(i,1);document.getElementById('hist-badge').textContent=sessionHistory.length;renderHist();}
+function clearAll(){sessionHistory=[];document.getElementById('hist-badge').textContent=0;renderHist();}
+</script>
+</body>
+</html>
