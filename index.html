@@ -283,7 +283,7 @@ function selHPlat(el){document.querySelectorAll('#hplat-grid .plat-btn').forEach
 function getSelChip(grid){const s=document.querySelector('#'+grid+' .chip.sel');return s?s.dataset.t||s.dataset.f||s.dataset.c:'';}
 
 async function callAPI(system,userMsg,maxTok=1200){
-  const r=await fetch('/.netlify/functions/claude',{
+  const r=await fetch('/api/claude',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTok,system,messages:[{role:'user',content:userMsg}]})
