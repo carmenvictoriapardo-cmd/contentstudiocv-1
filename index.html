@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carmen Victoria Content Studio</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f4f0;color:#1a1a1a;padding:1.5rem;}
+:root{--bg:#fff;--bg2:#f5f4f0;--border:rgba(0,0,0,0.12);--border2:rgba(0,0,0,0.22);--text:#1a1a1a;--text2:#555;--text3:#999;--radius:8px;--radius-lg:12px;}
+select,textarea{width:100%;font-size:14px;font-family:inherit;color:var(--text);background:var(--bg);border:0.5px solid var(--border2);border-radius:var(--radius);padding:8px 12px;outline:none;}
+select:focus,textarea:focus{border-color:#534AB7;}
+textarea{resize:vertical;line-height:1.6;}
+.wrap{max-width:780px;margin:0 auto;}
+.header{margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:0.5px solid var(--border);}
+.header h1{font-size:18px;font-weight:500;margin-bottom:4px;}
+.header p{font-size:13px;color:var(--text2);}
+.row{margin-bottom:14px;}
+label{font-size:13px;color:var(--text2);display:block;margin-bottom:6px;}
+.plat-btn{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);padding:9px 8px;cursor:pointer;text-align:center;font-size:13px;color:var(--text2);}
+.plat-btn.sel{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;font-weight:500;}
+.chip{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);padding:6px 12px;cursor:pointer;font-size:12px;color:var(--text2);display:inline-block;margin:3px;}
+.chip.sel{background:#E1F5EE;color:#085041;border-color:#5DCAA5;font-weight:500;}
+.purple-btn{width:100%;padding:12px;border-radius:var(--radius);border:none;background:#534AB7;color:#EEEDFE;font-size:15px;font-weight:500;cursor:pointer;margin-top:4px;}
+.purple-btn:hover{background:#3C3489;}
+.purple-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.outline-btn{background:transparent;border:0.5px solid var(--border2);border-radius:var(--radius);padding:6px 14px;font-size:12px;cursor:pointer;color:var(--text2);}
+.outline-btn:hover{background:var(--bg2);}
+.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:12px;}
+.tag-p{font-size:11px;font-weight:500;color:#3C3489;background:#EEEDFE;display:inline-block;padding:3px 10px;border-radius:var(--radius);}
+.tag-t{font-size:11px;font-weight:500;color:#085041;background:#E1F5EE;display:inline-block;padding:3px 10px;border-radius:var(--radius);}
+.tag-a{font-size:11px;font-weight:500;color:#633806;background:#FAEEDA;display:inline-block;padding:3px 10px;border-radius:var(--radius);}
+.tag-b{font-size:11px;font-weight:500;color:#0C447C;background:#E6F1FB;display:inline-block;padding:3px 10px;border-radius:var(--radius);}
+.tag-c{font-size:11px;font-weight:500;color:#712B13;background:#FAECE7;display:inline-block;padding:3px 10px;border-radius:var(--radius);}
+.ctext{font-size:14px;line-height:1.7;color:var(--text);white-space:pre-wrap;}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid #EEEDFE;border-top-color:#534AB7;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.divider{border:none;border-top:0.5px solid var(--border);margin:1.5rem 0;}
+.hint{font-size:12px;color:var(--text3);margin-top:4px;}
+.stitle{font-size:13px;font-weight:500;margin-bottom:10px;}
+.nav{display:flex;gap:6px;flex-wrap:wrap;border-bottom:0.5px solid var(--border);padding-bottom:12px;margin-bottom:1.5rem;}
+.nav-btn{background:transparent;border:0.5px solid var(--border2);border-radius:var(--radius);padding:7px 14px;font-size:13px;cursor:pointer;color:var(--text2);}
+.nav-btn.active{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;font-weight:500;}
+.tab{display:none;}.tab.active{display:block;}
+.badge{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#534AB7;color:#EEEDFE;font-size:10px;font-weight:500;margin-left:5px;}
+.sbar-wrap{background:var(--bg2);border-radius:20px;height:10px;overflow:hidden;margin:6px 0;}
+.sbar{height:10px;border-radius:20px;transition:width 0.6s;}
+.scene-card{background:var(--bg2);border-radius:var(--radius);padding:10px 14px;margin-bottom:8px;border-left:3px solid #534AB7;}
+.hpill{display:inline-block;font-size:12px;background:#EEEDFE;color:#3C3489;padding:4px 12px;border-radius:20px;margin:3px;cursor:pointer;}
+.hpill:hover{background:#CECBF6;}
+.hist-preview{font-size:13px;color:var(--text2);line-height:1.5;white-space:pre-wrap;max-height:70px;overflow:hidden;}
+.hist-preview.exp{max-height:none;}
+.del-btn{color:#A32D2D;border-color:#F09595;}
+.del-btn:hover{background:#FCEBEB;}
+.empty-state{text-align:center;padding:2rem;color:var(--text3);font-size:13px;}
+.snum{font-size:28px;font-weight:500;}
+.fi{font-size:13px;line-height:1.6;padding:8px 12px;border-radius:var(--radius);margin-bottom:6px;}
+.fi-ok{background:#E1F5EE;color:#085041;}
+.fi-warn{background:#FAEEDA;color:#633806;}
+.fi-fix{background:#FAECE7;color:#712B13;}
+.mov{display:inline-block;font-size:11px;padding:3px 10px;border-radius:var(--radius);margin:2px;background:#EEEDFE;color:#3C3489;}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="header">
+  <h1>Carmen Victoria Content Studio</h1>
+  <p>@soycarmenvictoriapardo &middot; Sistema completo de contenido para equipos &middot; Miami, Doral FL</p>
+</div>
+<div class="nav">
+  <button class="nav-btn active" id="nb-copy" onclick="goTab('copy',this)">Generar copy</button>
+  <button class="nav-btn" id="nb-guion" onclick="goTab('guion',this)">Guion de video</button>
+  <button class="nav-btn" id="nb-idea" onclick="goTab('idea',this)">Idea en bruto</button>
+  <button class="nav-btn" id="nb-voz" onclick="goTab('voz',this)">Verificar voz</button>
+  <button class="nav-btn" id="nb-hashtags" onclick="goTab('hashtags',this)">Hashtags</button>
+  <button class="nav-btn" id="nb-historial" onclick="goTab('historial',this)">Historial <span class="badge" id="hbadge">0</span></button>
+</div>
+
+<div id="tab-copy" class="tab active">
+  <div class="row">
+    <div class="stitle">Plataforma</div>
+    <div class="g2" id="plat-grid">
+      <div class="plat-btn sel" data-p="instagram" onclick="selPlat(this)">Instagram</div>
+      <div class="plat-btn" data-p="facebook" onclick="selPlat(this)">Facebook</div>
+      <div class="plat-btn" data-p="tiktok" onclick="selPlat(this)">TikTok</div>
+      <div class="plat-btn" data-p="linkedin" onclick="selPlat(this)">LinkedIn</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="stitle">Tipo</div>
+    <div id="tipo-grid">
+      <button class="chip sel" data-t="post feed" onclick="selChip(this,'tipo-grid')">Post feed</button>
+      <button class="chip" data-t="carrusel" onclick="selChip(this,'tipo-grid')">Carrusel</button>
+      <button class="chip" data-t="story" onclick="selChip(this,'tipo-grid')">Story</button>
+      <button class="chip" data-t="reel caption" onclick="selChip(this,'tipo-grid')">Reel caption</button>
+      <button class="chip" data-t="bio" onclick="selChip(this,'tipo-grid')">Bio</button>
+      <button class="chip" data-t="cta venta" onclick="selChip(this,'tipo-grid')">CTA venta</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="stitle">Formula</div>
+    <div id="formula-grid">
+      <button class="chip sel" data-f="confesional" onclick="selChip(this,'formula-grid')">Hook confesional</button>
+      <button class="chip" data-f="transformacion" onclick="selChip(this,'formula-grid')">2 frases transformacion</button>
+      <button class="chip" data-f="pas" onclick="selChip(this,'formula-grid')">PAS espiritual</button>
+      <button class="chip" data-f="4p" onclick="selChip(this,'formula-grid')">4P alto ticket</button>
+      <button class="chip" data-f="aida" onclick="selChip(this,'formula-grid')">AIDA</button>
+      <button class="chip" data-f="hormozi" onclick="selChip(this,'formula-grid')">Hormozi</button>
+      <button class="chip" data-f="brene" onclick="selChip(this,'formula-grid')">Brene Brown</button>
+      <button class="chip" data-f="shetty" onclick="selChip(this,'formula-grid')">Jay Shetty</button>
+      <button class="chip" data-f="auto" onclick="selChip(this,'formula-grid')">IA elige la mejor</button>
+    </div>
+  </div>
+  <div class="row">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div><label>Objetivo</label>
+        <select id="obj-copy">
+          <option value="engagement">Engagement</option>
+          <option value="leads">Captar leads</option>
+          <option value="awareness">Awareness de marca</option>
+          <option value="ventas">Venta directa</option>
+          <option value="comunidad">Construir comunidad</option>
+          <option value="seo">SEO local Doral</option>
+        </select>
+      </div>
+      <div><label>Tono</label>
+        <select id="tono-copy">
+          <option value="inspiracional cercano">Inspiracional y cercano</option>
+          <option value="directo poderoso">Directo y poderoso</option>
+          <option value="vulnerable autentico">Vulnerable y autentico</option>
+          <option value="profesional autoridad">Profesional con autoridad</option>
+          <option value="fe proposito">Fe y proposito</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <label>Contexto o idea</label>
+    <textarea id="ctx-copy" rows="4" placeholder="Escribe tu idea, historia o tema. Ej: La nevera vacia y las tres propuestas"></textarea>
+    <p class="hint">Cualquier persona del equipo puede escribir aqui. El sistema mantiene la voz de Carmen Victoria.</p>
+  </div>
+  <button class="purple-btn" id="btn-copy" onclick="genCopy()">Generar copy</button>
+  <div id="out-copy"></div>
+</div>
+
+<div id="tab-guion" class="tab">
+  <div class="row">
+    <div class="stitle">Plataforma del video</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+      <div class="plat-btn sel" data-p="instagram reel" onclick="selGP(this)" id="gp1">Instagram Reel</div>
+      <div class="plat-btn" data-p="tiktok" onclick="selGP(this)" id="gp2">TikTok</div>
+      <div class="plat-btn" data-p="youtube shorts" onclick="selGP(this)" id="gp3">YouTube Shorts</div>
+    </div>
+  </div>
+  <div class="row">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div><label>Duracion</label>
+        <select id="dur-guion">
+          <option value="15-30 segundos">15-30 segundos</option>
+          <option value="30-60 segundos" selected>30-60 segundos</option>
+          <option value="60-90 segundos">60-90 segundos</option>
+          <option value="3-5 minutos">3-5 minutos</option>
+        </select>
+      </div>
+      <div><label>Objetivo</label>
+        <select id="obj-guion">
+          <option value="viralidad y engagement">Viralidad</option>
+          <option value="autoridad y confianza">Autoridad</option>
+          <option value="captar leads">Captar leads</option>
+          <option value="venta de servicio">Venta</option>
+          <option value="educar a la audiencia">Educar</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <label>Idea del video</label>
+    <textarea id="ctx-guion" rows="4" placeholder="Ej: Como pase de la nevera vacia a firmar mi casa"></textarea>
+  </div>
+  <button class="purple-btn" id="btn-guion" onclick="genGuion()">Generar guion</button>
+  <div id="out-guion"></div>
+</div>
+
+<div id="tab-idea" class="tab">
+  <div class="card" style="border-left:3px solid #534AB7;border-radius:0 var(--radius-lg) var(--radius-lg) 0;">
+    <p style="font-size:13px;color:var(--text2);">Escribe cualquier idea en bruto. El sistema la analiza y la convierte en contexto listo para generar.</p>
+  </div>
+  <div class="row" style="margin-top:14px;">
+    <label>Tu idea (como sea)</label>
+    <textarea id="ctx-idea" rows="6" placeholder="Puede ser una nota de voz transcrita, un pensamiento, algo que paso hoy..."></textarea>
+  </div>
+  <button class="purple-btn" id="btn-idea" onclick="genIdea()">Analizar y desarrollar idea</button>
+  <div id="out-idea"></div>
+</div>
+
+<div id="tab-voz" class="tab">
+  <div class="card" style="border-left:3px solid #D85A30;border-radius:0 var(--radius-lg) var(--radius-lg) 0;">
+    <p style="font-size:13px;color:var(--text2);">Pega cualquier copy del equipo. El sistema evalua si suena a Carmen Victoria y entrega la version corregida.</p>
+  </div>
+  <div class="row" style="margin-top:14px;">
+    <label>Copy a verificar</label>
+    <textarea id="ctx-voz" rows="6" placeholder="Pega aqui el copy que quieres verificar..."></textarea>
+  </div>
+  <button class="purple-btn" id="btn-voz" onclick="genVoz()">Verificar voz de marca</button>
+  <div id="out-voz"></div>
+</div>
+
+<div id="tab-hashtags" class="tab">
+  <div class="row">
+    <div class="stitle">Plataforma</div>
+    <div class="g2" id="hplat-grid">
+      <div class="plat-btn sel" data-p="instagram" onclick="selHP(this)">Instagram</div>
+      <div class="plat-btn" data-p="facebook" onclick="selHP(this)">Facebook</div>
+      <div class="plat-btn" data-p="tiktok" onclick="selHP(this)">TikTok</div>
+      <div class="plat-btn" data-p="linkedin" onclick="selHP(this)">LinkedIn</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="stitle">Categoria</div>
+    <div id="hcat-grid">
+      <button class="chip sel" data-c="coaching personal" onclick="selChip(this,'hcat-grid')">Coaching personal</button>
+      <button class="chip" data-c="coaching empresarial" onclick="selChip(this,'hcat-grid')">Coaching empresarial</button>
+      <button class="chip" data-c="fe y proposito" onclick="selChip(this,'hcat-grid')">Fe y proposito</button>
+      <button class="chip" data-c="liderazgo femenino" onclick="selChip(this,'hcat-grid')">Liderazgo femenino</button>
+      <button class="chip" data-c="emprendimiento latino Miami" onclick="selChip(this,'hcat-grid')">Emprendimiento Latino Miami</button>
+      <button class="chip" data-c="marca personal" onclick="selChip(this,'hcat-grid')">Marca personal</button>
+      <button class="chip" data-c="SEO local Doral" onclick="selChip(this,'hcat-grid')">SEO local Doral</button>
+    </div>
+  </div>
+  <button class="purple-btn" id="btn-hash" onclick="genHashtags()">Generar banco de hashtags</button>
+  <div id="out-hash"></div>
+</div>
+
+<div id="tab-historial" class="tab">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+    <span style="font-size:13px;color:var(--text2);">Copys guardados esta sesion</span>
+    <button class="outline-btn del-btn" onclick="clearAll()">Borrar todo</button>
+  </div>
+  <div id="hist-list"></div>
+</div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
